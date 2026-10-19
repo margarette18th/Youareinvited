@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Margarette Pollana · 18th Birthday</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<video id="vid" autoplay muted loop playsinline></video>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="veil"></div>
+<main>
+<section class="hero">
+  <p>Save the date for the 18th birthday of</p>
+  <h1>Margarette <b>Pollana</b></h1>
+  <p>An evening of roses, candles, and treasures</p>
+  <div class="date" id="heroDate"></div>
+  <p id="heroTime"></p>
+  <a class="btn" href="#rsvp">RSVP</a>
+</section>
+
+<section id="details">
+  <h2>The details</h2>
+  <p class="sub">Please mark your calendar.</p>
+  <div class="detail">
+    <figure class="vfig" id="dvid"></figure>
+    <div class="info">
+      <div><span>Date</span><strong id="iDate"></strong></div>
+      <div><span>Time</span><strong id="iTime"></strong></div>
+      <div><span>Venue</span><strong id="iVenue"></strong></div>
+      <div><span>Attire</span><strong id="iAttire"></strong></div>
+    </div>
+  </div>
+</section>
+
+<div id="chapters"></div>
+
+<section id="rsvp">
+  <h2>RSVP</h2>
+  <p class="sub">Let us know if you can make it.</p>
+  <form id="f">
+    <label>Full name<input id="name" required autocomplete="name"></label>
+    <label>Will you attend?
+      <select id="att"><option>Yes, I'll be there</option><option>Sorry, I can't make it</option></select>
+    </label>
+    <label>Number of guests (including you)<input id="pax" type="number" min="1" max="3" value="1"></label>
+    <p class="hint" id="paxNote">Maximum of 3 guests per RSVP, including you. Need to add more people? Please submit another RSVP form for them.</p>
+    <label>Message for Margarette (optional)<textarea id="note" rows="3"></textarea></label>
+    <button class="btn" type="submit" style="margin:0">Send RSVP</button>
+    <div id="msg" role="status"></div>
+  </form>
+</section>
+<footer>Margarette Pollana · Eighteen</footer>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
