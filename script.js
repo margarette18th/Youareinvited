@@ -1,21 +1,19 @@
+/* ===== EDIT THESE ===== */
 var CFG={
   date:"November 8, 2026", time:"4:00 PM", venue:"Marikina Convention Center, Plenary Hall", attire:"Semi-formal",
   email:"mickaela.jeorge@gmail.com",
   /* Paste your Google Apps Script web app URL here (see setup steps). */
-  sheetUrl:"https://script.google.com/macros/s/AKfycbxOXfTBnoBLErkxnjG8fiHIXdSF9ghahw6a0febsk4SXi8rSGAZQwKI5EiEZES7KXJA/exec",
-  video:"assets/videos/MARGATURNS18final-1.mp4",   
+  sheetUrl:"",
+  video:"assets/videos/bg.mp4",        /* background video, e.g. "assets/videos/bg.mp4": plays on its own, loops, has a play/pause button. Empty = starry animation */
   photos:["assets/photos/roses-1.jpg", "assets/photos/candles-1.jpg", "assets/photos/treasures-1.jpg", "assets/photos/bills-1.jpg", "assets/photos/roses-2.jpg", "assets/photos/candles-2.jpg", "assets/photos/treasures-2.jpg", "assets/photos/bills-2.jpg"],  /* 8 photos: first 4 are the big ones (roses, candles, treasures, blue shots), last 4 the small overlapping ones */
-  roses:["Lolo Amador Lantin", "Jayjay Rosales", "Gabe Lantin", "Josh Garcia", "Leo Vincent Aala", "Gabriel Aala", "Cj Aala", "Jerome Aala", "Genesis Aala", "Brent Marasigan", "Ismael Abuzman", "Carlos Caalam", "Kevin Lantin", "Andrei Caalam", "Yro Amrik Daz", "Arem Untiveros", "Johnal Khow", "Peter John Mendoza"], 
-  candles:["Pauline Mendoza", "Mickaela Mendoza", "Jannah Rosales","Julliana Rosales","Chloie Moscoso","Angelica Porcel","Ashley Manuel","Shyrelle Baltazar","Hilaree Aquino","Anna Gomba" ,"Lux Quano","Micah Aguinaldo","Jhuryz Bitamug","Yesha Chua","Lalaine Aala","Zayahna Nicole","Angel Peralta","Elysha Castro"], 
-  treasures:["Francheska Asingayan","Alliyah Mallari","Zoe Ortega","Delaila Caccam","Jen Duroy","Rada Miguel","Tin Nuevo","Maverick Esguerra","Ashley De Jesus","Vincent Valientes","Zeila Reyes","Faye Caalam","Ruth Aala","Jasmine Macapagal","Shanet Lantin","Arbielle Virtucio","Elyzza Garcia","Rejean Epis"], 
-  shots:["Jhun Falcutila","Analiza Falcutila","Anthony Balasanos","Umbriel Dy","Jennica Ancajas" ,"Jillian Acle","Yousef Sorsogon","Jerslie Roca","Jireh Veloso","Jojo Caberto","Lance Ligon","Krixia Revadeo","Floriemae Pizon","Reigne Miguel","Franz Miguel","Almira Mariot","Kimberly Lantin","Sheila Padua"  ] /* up to 18 names each */
+  roses:[], candles:[], treasures:[], shots:[] /* up to 18 names each */
 };
 /* To hide a section, put // at the very start of its line below. To bring it back, delete the //. */
 var GROUPS=[
  {k:"roses",p:0,t:"18 Roses",d:"Eighteen special people who each present a rose to the debutante."},
  {k:"candles",p:1,t:"18 Candles",d:"Eighteen people who light a candle and share a message of love."},
  {k:"treasures",p:2,t:"18 Treasures",d:"Eighteen people who give a keepsake gift the debutante will treasure."},
- {k:"shots",p:3,t:"18 Blue shots",d:"Eighteen people toasting for adulthood"}
+ {k:"shots",p:3,t:"18 Blue shots",d:"Eighteen people who give a blue bill to wish her a bright future."}
 ];
 var $=function(id){return document.getElementById(id)};
 
