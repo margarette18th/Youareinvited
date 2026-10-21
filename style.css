@@ -541,7 +541,11 @@ footer {
   }
 
   li {
-    justify-content: center
+    justify-content: left
+  }
+
+  li span {
+    text-align: left;
   }
 
   .pw {
@@ -559,6 +563,10 @@ footer {
     translate: -50% 0
   }
 
+  .ph2.has {
+    display: none;
+  }
+
   #details,
   #rsvp {
     text-align: center
@@ -567,6 +575,10 @@ footer {
   .info {
     justify-items: center;
     gap: 20px
+  }
+
+  .info div.pal {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .info>div {
