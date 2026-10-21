@@ -1,19 +1,21 @@
-/* ===== EDIT THESE ===== */
 var CFG={
   date:"November 8, 2026", time:"4:00 PM", venue:"Marikina Convention Center, Plenary Hall", attire:"Semi-formal",
   email:"mickaela.jeorge@gmail.com",
   /* Paste your Google Apps Script web app URL here (see setup steps). */
-  sheetUrl:"",
-  video:"assets/videos/bg.mp4",        /* background video, e.g. "assets/videos/bg.mp4": plays on its own, loops, has a play/pause button. Empty = starry animation */
+  sheetUrl:"https://script.google.com/macros/s/AKfycbxOXfTBnoBLErkxnjG8fiHIXdSF9ghahw6a0febsk4SXi8rSGAZQwKI5EiEZES7KXJA/exec",
+  video:"assets/videos/MARGATURNS18final-1.mp4",   
   photos:["assets/photos/roses-1.jpg", "assets/photos/candles-1.jpg", "assets/photos/treasures-1.jpg", "assets/photos/bills-1.jpg", "assets/photos/roses-2.jpg", "assets/photos/candles-2.jpg", "assets/photos/treasures-2.jpg", "assets/photos/bills-2.jpg"],  /* 8 photos: first 4 are the big ones (roses, candles, treasures, blue shots), last 4 the small overlapping ones */
-  roses:[], candles:[], treasures:[], shots:[] /* up to 18 names each */
+  roses:["Lolo Amador Lantin", "Jayjay Rosales", "Gabe Lantin", "Josh Garcia", "Leo Vincent Aala", "Gabriel Aala", "Cj Aala", "Jerome Aala", "Genesis Aala", "Brent Marasigan", "Ismael Abuzman", "Carlos Caalam", "Kevin Lantin", "Andrei Caalam", "Yro Amrik Daz", "Arem Untiveros", "Johnal Khow", "Peter John Mendoza"], 
+  candles:["Pauline Mendoza", "Mickaela Mendoza", "Jannah Rosales","Julliana Rosales","Chloie Moscoso","Angelica Porcel","Ashley Manuel","Shyrelle Baltazar","Hilaree Aquino","Anna Gomba" ,"Lux Quano","Micah Aguinaldo","Jhuryz Bitamug","Yesha Chua","Lalaine Aala","Zayahna Nicole","Angel Peralta","Elysha Castro"], 
+  treasures:["Francheska Asingayan","Alliyah Mallari","Zoe Ortega","Delaila Caccam","Jen Duroy","Rada Miguel","Tin Nuevo","Maverick Esguerra","Ashley De Jesus","Vincent Valientes","Zeila Reyes","Faye Caalam","Ruth Aala","Jasmine Macapagal","Shanet Lantin","Arbielle Virtucio","Elyzza Garcia","Rejean Epis"], 
+  shots:["Jhun Falcutila","Analiza Falcutila","Anthony Balasanos","Umbriel Dy","Jennica Ancajas" ,"Jillian Acle","Yousef Sorsogon","Jerslie Roca","Jireh Veloso","Jojo Caberto","Lance Ligon","Krixia Revadeo","Floriemae Pizon","Reigne Miguel","Franz Miguel","Almira Mariot","Kimberly Lantin","Sheila Padua"  ] /* up to 18 names each */
 };
 /* To hide a section, put // at the very start of its line below. To bring it back, delete the //. */
 var GROUPS=[
  {k:"roses",p:0,t:"18 Roses",d:"Eighteen special people who each present a rose to the debutante."},
  {k:"candles",p:1,t:"18 Candles",d:"Eighteen people who light a candle and share a message of love."},
  {k:"treasures",p:2,t:"18 Treasures",d:"Eighteen people who give a keepsake gift the debutante will treasure."},
- {k:"shots",p:3,t:"18 Blue shots",d:"Eighteen people who give a blue bill to wish her a bright future."}
+ {k:"shots",p:3,t:"18 Blue shots",d:"Eighteen people toasting for adulthood"}
 ];
 var $=function(id){return document.getElementById(id)};
 
@@ -22,7 +24,11 @@ $("heroDate").textContent=CFG.date;
 $("heroTime").textContent="at "+CFG.time+" · "+CFG.venue;
 $("iDate").textContent=CFG.date;$("iTime").textContent=CFG.time;$("iVenue").textContent=CFG.venue;$("iAttire").textContent=CFG.attire;
 var PAL=[["Charcoal Blue","#232A34"],["Midnight Charcoal","#1B2028"],["Dark Espresso Brown","#2F251C"],["Dark Aubergine","#281026"],["Deep Forest Green","#2B392C"],["Dark Chestnut Brown","#683821"]];
-PAL.forEach(function(c){var f=document.createElement("figure"),i=document.createElement("i"),b=document.createElement("b"),e=document.createElement("em");i.style.background=c[1];b.textContent=c[0];e.textContent=c[1];f.appendChild(i);f.appendChild(b);f.appendChild(e);$("pal").appendChild(f)});
+PAL.forEach(function(c){
+  var f=document.createElement("figure"),
+  i=document.createElement("i"),
+  b=document.createElement("b"),
+  e=document.createElement("em");i.style.background=c[1];b.textContent=c[0];e.textContent=c[1];f.appendChild(i);f.appendChild(b);f.appendChild(e);$("pal").appendChild(f)});
 /* the 18s: alternating parallax chapters */
 var vis=0;
 GROUPS.forEach(function(g){
@@ -110,7 +116,7 @@ GROUPS.forEach(function(g){
 })();
 
 /* guest limit: max 3 per form, with a hint to submit another form */
-$("pax").addEventListener("input",function(){var h=$("paxNote"),bad=+this.value>3;if(!h.dataset.d)h.dataset.d=h.textContent;h.classList.toggle("warn",bad);h.textContent=bad?"Only 3 guests are allowed per form. Please submit another RSVP form for the other guests.":h.dataset.d;this.setCustomValidity(bad?"Maximum of 3 guests per form":"")});
+$("pax").addEventListener("input",function(){var h=$("paxNote"),bad=+this.value>2;if(!h.dataset.d)h.dataset.d=h.textContent;h.classList.toggle("warn",bad);h.textContent=bad?"Only 2 guests are allowed per form. Please submit another RSVP form for the other guests.":h.dataset.d;this.setCustomValidity(bad?"Maximum of 2 guests per form":"")});
 
 /* RSVP: save each response as a new row in a Google Sheet */
 $("f").addEventListener("submit",function(e){

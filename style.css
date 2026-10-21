@@ -185,7 +185,7 @@ h2 {
 
 .info {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px 34px
 }
 
@@ -415,7 +415,7 @@ textarea:focus {
 
 .info div.pal {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   border-top: 0;
   padding-top: 0;
@@ -446,7 +446,8 @@ textarea:focus {
 .pal em {
   font-style: normal;
   color: var(--soft);
-  letter-spacing: .03em
+  letter-spacing: .03em;
+  display: none;
 }
 
 textarea {
