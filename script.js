@@ -1,19 +1,21 @@
-/* ===== EDIT THESE ===== */
 var CFG={
-  date:"November 8, 2026", time:"5:00 PM", venue:"Marikina Convention Center, Plenary Hall", attire:"Formal, blue and white",
+  date:"November 8, 2026", time:"4:00 PM", venue:"Marikina Convention Center, Plenary Hall", attire:"Semi-formal",
   email:"mickaela.jeorge@gmail.com",
   /* Paste your Google Apps Script web app URL here (see setup steps). */
   sheetUrl:"https://script.google.com/macros/s/AKfycbxOXfTBnoBLErkxnjG8fiHIXdSF9ghahw6a0febsk4SXi8rSGAZQwKI5EiEZES7KXJA/exec",
-  video:"",        /* optional background video (.mp4 link); empty = starry animation */
-  detailVideo:"",  /* video shown beside the details */
-  photos:["assets/photos/roses-1.jpg", "assets/photos/candles-1.jpg", "assets/photos/treasures-1.jpg", "assets/photos/bills-1.jpg", "assets/photos/roses-2.jpg", "assets/photos/candles-2.jpg", "assets/photos/treasures-2.jpg", "assets/photos/bills-2.jpg"],  /* 8 photos: first 4 are the big ones (roses, candles, treasures, blue bills), last 4 the small overlapping ones */
-  roses:[], candles:[], treasures:[], bills:[] /* up to 18 names each */
+  video:"assets/videos/MARGATURNS18final-1.mp4",   
+  photos:["assets/photos/roses-1.jpg", "assets/photos/candles-1.jpg", "assets/photos/treasures-1.jpg", "assets/photos/bills-1.jpg", "assets/photos/roses-2.jpg", "assets/photos/candles-2.jpg", "assets/photos/treasures-2.jpg", "assets/photos/bills-2.jpg"],  /* 8 photos: first 4 are the big ones (roses, candles, treasures, blue shots), last 4 the small overlapping ones */
+  roses:["Lolo Amador Lantin", "Jayjay Rosales", "Gabe Lantin", "Josh Garcia", "Leo Vincent Aala", "Gabriel Aala", "Cj Aala", "Jerome Aala", "Genesis Aala", "Brent Marasigan", "Ismael Abuzman", "Carlos Caalam", "Kevin Lantin", "Andrei Caalam", "Yro Amrik Daz", "Arem Untiveros", "Johnal Khow", "Peter John Mendoza"], 
+  candles:["Pauline Mendoza", "Mickaela Mendoza", "Jannah Rosales","Julliana Rosales","Chloie Moscoso","Angelica Porcel","Ashley Manuel","Shyrelle Baltazar","Hilaree Aquino","Anna Gomba" ,"Lux Quano","Micah Aguinaldo","Jhuryz Bitamug","Yesha Chua","Lalaine Aala","Zayahna Nicole","Angel Peralta","Elysha Castro"], 
+  treasures:["Francheska Asingayan","Alliyah Mallari","Zoe Ortega","Delaila Caccam","Jen Duroy","Rada Miguel","Tin Nuevo","Maverick Esguerra","Ashley De Jesus","Vincent Valientes","Zeila Reyes","Faye Caalam","Ruth Aala","Jasmine Macapagal","Shanet Lantin","Arbielle Virtucio","Elyzza Garcia","Rejean Epis"], 
+  shots:["Jhun Falcutila","Analiza Falcutila","Anthony Balasanos","Umbriel Dy","Jennica Ancajas" ,"Jillian Acle","Yousef Sorsogon","Jerslie Roca","Jireh Veloso","Jojo Caberto","Lance Ligon","Krixia Revadeo","Floriemae Pizon","Reigne Miguel","Franz Miguel","Almira Mariot","Kimberly Lantin","Sheila Padua"  ] /* up to 18 names each */
 };
+/* To hide a section, put // at the very start of its line below. To bring it back, delete the //. */
 var GROUPS=[
- {k:"roses",t:"18 Roses",d:"Eighteen special people who each present a rose to the debutante."},
- {k:"candles",t:"18 Candles",d:"Eighteen people who light a candle and share a message of love."},
- {k:"treasures",t:"18 Treasures",d:"Eighteen people who give a keepsake gift the debutante will treasure."},
- {k:"bills",t:"18 Blue Bills",d:"Eighteen people who give a blue bill to wish her a bright future."}
+ {k:"roses",p:0,t:"18 Roses",d:"Eighteen special people who each present a rose to the debutante."},
+ {k:"candles",p:1,t:"18 Candles",d:"Eighteen people who light a candle and share a message of love."},
+ {k:"treasures",p:2,t:"18 Treasures",d:"Eighteen people who give a keepsake gift the debutante will treasure."},
+ {k:"shots",p:3,t:"18 Blue shots",d:"Eighteen people toasting for adulthood"}
 ];
 var $=function(id){return document.getElementById(id)};
 
@@ -21,14 +23,13 @@ var $=function(id){return document.getElementById(id)};
 $("heroDate").textContent=CFG.date;
 $("heroTime").textContent="at "+CFG.time+" · "+CFG.venue;
 $("iDate").textContent=CFG.date;$("iTime").textContent=CFG.time;$("iVenue").textContent=CFG.venue;$("iAttire").textContent=CFG.attire;
-(function(){var f=$("dvid");
-  if(CFG.detailVideo){var v=document.createElement("video");v.src=CFG.detailVideo;v.controls=true;v.playsInline=true;v.preload="metadata";f.className+=" has";f.appendChild(v)}
-  else f.textContent="Video: add from our file"})();
-
+var PAL=[["Charcoal Blue","#232A34"],["Midnight Charcoal","#1B2028"],["Dark Espresso Brown","#2F251C"],["Dark Aubergine","#281026"],["Deep Forest Green","#2B392C"],["Dark Chestnut Brown","#683821"]];
+PAL.forEach(function(c){var f=document.createElement("figure"),i=document.createElement("i"),b=document.createElement("b"),e=document.createElement("em");i.style.background=c[1];b.textContent=c[0];e.textContent=c[1];f.appendChild(i);f.appendChild(b);f.appendChild(e);$("pal").appendChild(f)});
 /* the 18s: alternating parallax chapters */
-GROUPS.forEach(function(g,i){
-  var names=CFG[g.k],s=document.createElement("section");
-  s.className="chapter "+(i%2?"left":"right");
+var vis=0;
+GROUPS.forEach(function(g){
+  var i=g.p,names=CFG[g.k],s=document.createElement("section");
+  s.className="chapter "+(vis++%2?"left":"right");
   var t=document.createElement("div");t.className="txt";
   var h=document.createElement("h2");h.textContent=g.t;
   var p=document.createElement("p");p.className="desc";p.textContent=g.d;
@@ -44,39 +45,33 @@ GROUPS.forEach(function(g,i){
   s.appendChild(t);s.appendChild(w);$("chapters").appendChild(s);
 });
 
-/* parallax: photo and text drift at different speeds while scrolling */
+/* scroll effects, kept inside the frame budget:
+   - sections transition in once when scrolled to (IntersectionObserver + CSS transitions, transform/opacity only)
+   - progress rail, parallax and video veil run in one rAF loop; all layout reads happen before any writes */
 (function(){
-  if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
-  var chs=[].slice.call(document.querySelectorAll(".chapter")),tick=false;
-  function run(){tick=false;var vh=innerHeight;
-    chs.forEach(function(c){var r=c.getBoundingClientRect();if(r.bottom<-200||r.top>vh+200)return;
-      var d=r.top+r.height/2-vh/2;
-      c.querySelector(".pw").style.transform="translateY("+(-d*.14).toFixed(1)+"px)";
-      c.querySelector(".ph2").style.transform="translateY("+(d*.12).toFixed(1)+"px)";
-      c.querySelector(".txt").style.transform="translateY("+(d*.05).toFixed(1)+"px)"})}
-  addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(run)}},{passive:true});
-  addEventListener("resize",run);run();
-})();
-
-/* scroll-linked animation: progress rail with a star that follows the scroll,
-   hero fade, stars shifting with scroll, and items that appear as you scroll */
-(function(){
-  if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
-  var rail=document.createElement("div");rail.id="rail";rail.setAttribute("aria-hidden","true");
-  rail.innerHTML="<i></i><b></b>";document.body.appendChild(rail);
-  var bar=rail.firstChild,dot=rail.lastChild,hero=document.querySelector(".hero"),tick=false,
-      items=[].slice.call(document.querySelectorAll("li,#details .vfig,#details .info div,#rsvp h2,#rsvp form,#details h2"));
+  var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches,veil=document.querySelector(".veil");
+  if(!reduce&&"IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=e.target;t.classList.add("in");io.unobserve(t);t.addEventListener("transitionend",function h(ev){if(ev.propertyName==="transform"&&ev.target===t){t.classList.remove("rv","in");t.style.removeProperty("--d");t.removeEventListener("transitionend",h)}})}})},{threshold:.15,rootMargin:"0px 0px -6% 0px"});
+    [".hero>*","#details h2","#details .sub","#details .info>div",".chapter h2",".chapter .desc",".chapter li","#rsvp h2","#rsvp .sub","#rsvp form","#rsvp .mapbox"].forEach(function(sel){
+      [].forEach.call(document.querySelectorAll(sel),function(el,i){
+        var d=(sel===".hero>*"||sel==="#details .info>div")?i*110:sel===".chapter li"?((i%18)>>1)*45:sel===".chapter .desc"?100:0;
+        el.classList.add("rv");el.style.setProperty("--d",d+"ms");io.observe(el)})})}
+  var rail=document.createElement("div");rail.id="rail";rail.setAttribute("aria-hidden","true");rail.innerHTML="<i></i><b></b>";document.body.appendChild(rail);
+  var bar=rail.firstChild,dot=rail.lastChild,railH=0,tick=false,
+      chs=[].slice.call(document.querySelectorAll(".chapter")).map(function(c){return{c:c,pw:c.querySelector(".pw"),p2:c.querySelector(".ph2"),tx:c.querySelector(".txt")}});
   function run(){tick=false;
-    var vh=innerHeight,y=scrollY,max=document.documentElement.scrollHeight-vh,p=max>0?Math.min(1,Math.max(0,y/max)):0;
-    bar.style.transform="scaleY("+p+")";dot.style.top=(p*100)+"%";
-    hero.style.transform="translateY("+(y*.35).toFixed(1)+"px) scale("+(1-Math.min(y/vh,1)*.08).toFixed(3)+")";
-    hero.style.opacity=Math.max(0,1-y/(vh*.75)).toFixed(2);
-    items.forEach(function(el){var r=el.getBoundingClientRect();
-      var t=Math.min(1,Math.max(0,(vh*.94-r.top)/(vh*.26)));
-      el.style.opacity=t.toFixed(2);el.style.transform="translateY("+((1-t)*26).toFixed(1)+"px)"});
-  }
+    var vh=innerHeight,y=scrollY,max=document.documentElement.scrollHeight-vh,p=max>0?Math.min(1,Math.max(0,y/max)):0,
+        rs=reduce?[]:chs.map(function(o){return o.c.getBoundingClientRect()});
+    veil.style.opacity=reduce?1:Math.min(1,y/(vh*.85)).toFixed(2);
+    bar.style.transform="scaleY("+p.toFixed(4)+")";dot.style.transform="translateY("+(p*railH).toFixed(1)+"px)";
+    rs.forEach(function(r,i){if(r.bottom<-200||r.top>vh+200)return;
+      var d=r.top+r.height/2-vh/2,o=chs[i];
+      o.pw.style.transform="translateY("+(-d*.14).toFixed(1)+"px)";
+      o.p2.style.transform="translateY("+(d*.12).toFixed(1)+"px)";
+      o.tx.style.transform="translateY("+(d*.05).toFixed(1)+"px)"})}
+  function measure(){railH=rail.clientHeight;run()}
   addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(run)}},{passive:true});
-  addEventListener("resize",run);run();
+  addEventListener("resize",measure);measure();
 })();
 
 /* shooting-star cursor: glowing star head with a fading tail and sparkles */
@@ -92,6 +87,7 @@ GROUPS.forEach(function(g,i){
     hold=!!(el&&el.closest("input,textarea"));
     if(Math.random()<.6)S.push({x:mx,y:my,vx:(Math.random()-.5)*1.4,vy:.3+Math.random()*1.2,l:1,r:.7+Math.random()*1.5})});
   document.documentElement.addEventListener("mouseleave",function(){on=false});
+  var fr=document.querySelector(".mapbox iframe");if(fr){fr.addEventListener("mouseenter",function(){on=false});fr.addEventListener("mouseleave",function(){on=true})}
   document.documentElement.addEventListener("mouseenter",function(){on=true});
   function draw(){
     x.clearRect(0,0,W,H);tt+=.05;
@@ -125,7 +121,7 @@ $("f").addEventListener("submit",function(e){
       d={name:v("name"),attending:v("att"),guests:v("pax"),message:v("note")||"-"};
   if(+d.guests>3||+d.guests<1){m.textContent="Sorry, only up to 3 guests per RSVP. Please submit another form for additional people.";$("pax").focus();return}
   function viaMail(){
-    var body="RSVP for Margarette Pollana's 18th Birthday\n\nName: "+d.name+"\nAttending: "+d.attending+"\nGuests: "+d.guests+"\nMessage: "+d.message;
+    var body="RSVP for Margarette Mendoza's 18th Birthday\n\nName: "+d.name+"\nAttending: "+d.attending+"\nGuests: "+d.guests+"\nMessage: "+d.message;
     m.textContent="Opening your email app. Press send to finish your RSVP.";
     location.href="mailto:"+CFG.email+"?subject="+encodeURIComponent("RSVP: "+d.name)+"&body="+encodeURIComponent(body);
   }
@@ -136,7 +132,52 @@ $("f").addEventListener("submit",function(e){
    .catch(viaMail);
 });
 
-if(CFG.video){var vd=$("vid");vd.src=CFG.video;vd.style.display="block";$("bg").style.display="none"}
+/* background video: starts on its own, loops, has sound, and a play/pause button (lower right).
+   On phone-size screens (760px wide or less) the video is never loaded or shown: the starry sky is used instead. */
+(function(){
+  var vd=$("vid"),cv=$("bg"),note=$("vnote"),mq=matchMedia("(max-width:760px)"),
+      hasSrc=!!CFG.video,failed=false,started=false,userPaused=false,userMuted=false,
+  svg=function(p){return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">'+p+'</svg>'},
+  spk='<path fill="currentColor" d="M3 10v4h4l5 4V6L7 10H3z"/>',
+  I={play:svg('<path fill="currentColor" d="M8 5v14l11-7z"/>'),
+     pause:svg('<path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/>'),
+     on:svg(spk+'<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>'),
+     off:svg(spk+'<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9l5 6M21 9l-5 6"/>')};
+  var ui=document.createElement("div");ui.id="media";ui.innerHTML='<button id="snd" type="button"></button><button id="pp" type="button"></button>';
+  var toast=document.createElement("div");toast.id="toast";toast.setAttribute("role","status");toast.textContent="Tap anywhere to turn on the sound";
+  document.body.appendChild(ui);document.body.appendChild(toast);
+  var pp=$("pp"),snd=$("snd"),evs=["pointerup","click","keydown","touchend"];
+  function live(){return hasSrc&&!failed&&!mq.matches}
+  function paused(){return live()?vd.paused:!!window.__skyPaused}
+  function sync(){
+    pp.innerHTML=paused()?I.play:I.pause;pp.setAttribute("aria-label",paused()?"Play":"Pause");
+    snd.innerHTML=vd.muted?I.off:I.on;snd.setAttribute("aria-label",vd.muted?"Turn sound on":"Mute sound");
+    snd.style.display=live()?"":"none"}
+  function layout(){var v=live();vd.style.display=v?"block":"none";cv.style.display=v?"none":"block";note.hidden=mq.matches||(hasSrc&&!failed)}
+  function unlock(e){
+    if(!live()||(e&&e.target&&e.target.closest&&e.target.closest("#media")))return;
+    if(vd.muted&&!userMuted){vd.muted=false;if(!userPaused)vd.play().catch(function(){});toast.classList.remove("show")}
+    if(!vd.muted||userMuted)evs.forEach(function(n){removeEventListener(n,unlock)})}
+  /* browsers block autoplay with sound until the visitor interacts: try with sound, fall back to muted, turn the sound on at the first tap or key press */
+  function begin(){
+    if(!vd.getAttribute("src")){vd.src=CFG.video;vd.loop=true;vd.playsInline=true;vd.preload="auto"}
+    started=true;evs.forEach(function(n){addEventListener(n,unlock,{passive:true})});
+    vd.muted=userMuted;
+    var pr=vd.play();
+    if(pr&&pr.catch)pr.catch(function(){vd.muted=true;vd.play().catch(function(){});toast.classList.add("show");setTimeout(function(){toast.classList.remove("show")},9000);sync()})}
+  function onScreen(){layout();if(live()){if(!userPaused)begin()}else if(started)vd.pause();sync()}
+  pp.onclick=function(){
+    if(live()){if(vd.paused){userPaused=false;vd.play().catch(function(){})}else{userPaused=true;vd.pause()}}
+    else{window.__skyPaused=!window.__skyPaused;sync()}};
+  snd.onclick=function(){userMuted=!vd.muted;vd.muted=!vd.muted;toast.classList.remove("show");
+    if(!vd.muted&&vd.paused&&!userPaused)vd.play().catch(function(){});sync()};
+  vd.addEventListener("error",function(){if(!vd.getAttribute("src"))return;failed=true;layout();sync()});
+  vd.addEventListener("ended",function(){vd.currentTime=0;vd.play().catch(function(){})});
+  ["play","pause","volumechange"].forEach(function(n){vd.addEventListener(n,sync)});
+  document.addEventListener("visibilitychange",function(){if(!document.hidden&&live()&&started&&!userPaused)vd.play().catch(function(){})});
+  if(mq.addEventListener)mq.addEventListener("change",onScreen);else if(mq.addListener)mq.addListener(onScreen);
+  onScreen();
+})();
 
 /* looping midnight sky: twinkling stars and shooting stars */
 (function(){
@@ -145,6 +186,7 @@ if(CFG.video){var vd=$("vid");vd.src=CFG.video;vd.style.display="block";$("bg").
     for(var i=0;i<n;i++)S.push({x:Math.random()*W,y:Math.random()*H,r:.4+Math.random()*1.4,t:Math.random()*6.28,z:.04+Math.random()*.25,v:.01+Math.random()*.03,d:.02+Math.random()*.08})}
   size();addEventListener("resize",size);
   function draw(){
+    if(window.__skyPaused){requestAnimationFrame(draw);return}
     var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#03061a");g.addColorStop(.6,"#0a1440");g.addColorStop(1,"#16276b");
     x.fillStyle=g;x.fillRect(0,0,W,H);
     S.forEach(function(p){p.t+=p.v;p.y-=p.d;if(p.y<-2)p.y=H+2;var yy=((p.y-(window.scrollY||0)*p.z)%H+H)%H;
