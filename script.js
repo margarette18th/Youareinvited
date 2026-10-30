@@ -33,10 +33,86 @@ var CFG = {
     "Rada Miguel", "Zeila Reyes", "Reigne Miguel", "Franz Miguel", "Asherina Daz"],
   video: ["assets/videos/MARGATURNS18final-1.mp4"],
   photos: ["assets/photos/roses-1.jpg", "assets/photos/candles-1.jpg", "assets/photos/treasures-1.jpg", "assets/photos/bills-1.jpg", "assets/photos/roses-2.jpg", "assets/photos/candles-2.jpg", "assets/photos/treasures-2.jpg", "assets/photos/bills-2.jpg"],  /* 8 photos: first 4 are the big ones (roses, candles, treasures, blue shots), last 4 the small overlapping ones */
-  roses: ["Lolo Amador Lantin", "Jayjay Rosales", "Gabe Lantin", "Josh Garcia", "Leo Vincent Aala", "Gabriel Aala", "Jerome Aala", "Genesis Aala", "Brent Marasigan", "Ismael Abuzman", "Carlos Caalam", "Kevin Lantin", "Andrei Caalam", "Arem Untiveros", "Johnal Khow", "Yro Amrik Daz", "Joey Rosales", "Peter John Mendoza"],
-  candles: ["Pauline Mendoza", "Mickaela Mendoza", "Jannah Rosales", "Julliana Rosales", "Chloie Moscoso", "Angelica Porcel", "Ashley Manuel", "Shyrelle Baltazar", "Hilaree Aquino", "Anna Gomba", "Lux Quano", "Micah Aguinaldo", "Jhuryz Bitamug", "Yesha Chua", "Lalaine Aala", "Zayahna Nicole", "Angel Peralta", "Elysha Castro"],
-  treasures: ["Francheska Asingayan", "Alliyah Mallari", "Zoe Ortega", "Delaila Caccam", "Jen Duroy", "Rada Miguel", "Tin Nuevo", "Maverick Esguerra", "Ashley De Jesus", "Vincent Valientes", "Zeila Reyes", "Faye Caalam", "Ruth Aala", "Jasmine Macapagal", "Shanet Lantin", "Arbielle Virtucio", "Elyzza Garcia", "Rejean Epis"],
-  shots: ["Jhun Falcutila", "Analiza Falcutila", "Anthony Balasanos", "Umbriel Dy", "Jennica Ancajas", "Jillian Acle", "Yousef Sorsogon", "Jerslie Roca", "Jireh Veloso", "Jojo Caberto", "Lance Ligon", "Krixia Revadeo", "Floriemae Pizon", "Reigne Miguel", "Franz Miguel", "Almira Mariot", "Kimberly Lantin", "Sheila Padua"] /* up to 18 names each */
+  roses: [
+    "Lolo Amador Lantin",
+    "Jayjay Rosales",
+    "Gabe Lantin",
+    "Josh Garcia",
+    "Leo Vincent Aala",
+    "Gabriel Aala",
+    "Jerome Aala",
+    "Genesis Aala",
+    "Brent Marasigan",
+    "Ismael Abuzman",
+    "Carlos Caalam",
+    "Kevin Lantin",
+    "Andrei Caalam",
+    "Arem Untiveros",
+    "Johnal Khow",
+    "Yro Amrik Daz",
+    "Joey Rosales",
+    "Peter John Mendoza"
+  ],
+  candles: [
+    "Pauline Mendoza",
+    "Mickaela Mendoza",
+    "Jannah Rosales",
+    "Julliana Rosales",
+    "Anna Gomba ",
+    "Ashley Manuel",
+    "Shyrelle Baltazar",
+    "Hilaree Aquino",
+    "Jhuryz Bitamug",
+    "Yesha Chua",
+    "Lalaine Aala",
+    "Zayahna Nicole",
+    "Angel Peralta",
+    "Elysha Castro",
+    "Xyza Torres",
+    "Asherina Daz",
+    "Joy Torres",
+    "Lynette Rosales"
+  ],
+  treasures: [
+    "Francheska Asingayan",
+    "Alliyah Mallari",
+    "Delaila Caccam",
+    "Jen Duroy",
+    "Analiza Falcutila",
+    "Ashley De Jesus",
+    "Vincent Valientes",
+    "Zeila Reyes",
+    "Tin Nuevo",
+    "Faye Caalam",
+    "Ruth Aala",
+    "Jasmine Macapagal",
+    "Rejean Epis",
+    "Krixia Revadeo ",
+    "Yosh Cabanela",
+    "Bianca Fabregas",
+    "Angela Placido",
+    "Kaori Bustamante"
+  ],
+  shots: [
+    "Jhun Falcutila",
+    "Anthony Balasanos",
+    "Jojo Caberto",
+    "Jireh Veloso",
+    "Jennica Ancajas ",
+    "Jillian Acle ",
+    "Umbriel Dy",
+    "Jerslie Roca",
+    "Lance Ligon",
+    "Saq Pagaduan",
+    "Rian Gozon",
+    "Floriemae Pizon",
+    "Reigne Miguel",
+    "Franz Miguel",
+    "Almira Mariot",
+    "Miguel Pascual",
+    "Cj Aala",
+    "Andrew Aala"
+  ] /* up to 18 names each */
 };
 /* To hide a section, put // at the very start of its line below. To bring it back, delete the //. */
 var GROUPS = [
@@ -230,7 +306,7 @@ $("f").addEventListener("submit", function (e) {
   if (!CFG.sheetUrl) { viaMail(); return }
   m.textContent = "Sending...";
   fetch(CFG.sheetUrl, { method: "POST", mode: "no-cors", body: new URLSearchParams(d) })
-    .then(function () { m.textContent = "Thank you, " + d.name + "! Your RSVP was saved."; $("f").reset(); guestFields() })
+    .then(function () { m.textContent = "Thank you, " + d.name + "!"; $("f").reset(); guestFields() })
     .catch(viaMail);
 });
 
